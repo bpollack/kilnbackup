@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 
 
-import ConfigParser, sys, urllib, urllib2, cookielib, os, subprocess, shutil
+import ConfigParser, sys, urllib, urllib2, cookielib, os, subprocess, shutil, time
 
 config = ConfigParser.ConfigParser()
 config.read("kilnbackup.cfg")
@@ -34,7 +34,7 @@ if not config.has_section('kiln'):
 settings = dict(config.items('kiln'))
 
 def prompt(msg):
-	print(prompt)
+	print(msg)
 	value = sys.stdin.readline().strip()
 	if not value:
 		sys.exit()
@@ -99,7 +99,8 @@ for repo in jseval(get_repos()):
 
 		if not hgrc.has_section('paths') or hgrc.get('paths', 'default') != url:
 			print "Deleting old repo", name
-			shutil.rmtree(name)
+			if not os.path.exists("archive"): os.mkdir("archive")
+			shutil.move(name, "archive/%f-%s" % (time.time(), name))
 	
 	if os.path.exists(name):
 		os.chdir(name)
