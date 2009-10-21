@@ -21,8 +21,16 @@
 # THE SOFTWARE.
 
 
-import ConfigParser, sys, urllib, urllib2, cookielib, os, subprocess, shutil, time
+import ConfigParser
+import cookielib
 import getpass
+import os
+import shutil
+import subprocess
+import sys
+import time
+import urllib
+import urllib2
 
 config = ConfigParser.RawConfigParser()
 config.read("kilnbackup.cfg")
