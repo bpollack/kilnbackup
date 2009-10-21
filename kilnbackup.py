@@ -22,6 +22,7 @@
 
 
 import ConfigParser, sys, urllib, urllib2, cookielib, os, subprocess, shutil, time
+import getpass
 
 config = ConfigParser.RawConfigParser()
 config.read("kilnbackup.cfg")
@@ -33,16 +34,16 @@ if not config.has_section('kiln'):
 
 settings = dict(config.items('kiln'))
 
-def prompt(msg):
-	value = raw_input(msg)
+def prompt(msg, secure):
+	value = raw_input(msg) if not secure else getpass.getpass(msg)
 	if not value:
 		sys.exit()
 	return value
 
-def check(section, option, msg):
+def check(section, option, msg, secure=False):
 	if settings.get(option):
 		return
-	value = prompt(msg)
+	value = prompt(msg, secure)
 	global save
 	save = True
 	config.set(section, option, value)
@@ -50,7 +51,7 @@ def check(section, option, msg):
 
 check("kiln", "server", "FogBugz URL (e.g. https://company.fogbugz.com): ")
 check("kiln", "username", "Username: ")
-check("kiln", "password", "Password: ")
+check("kiln", "password", "Password: ", secure=True)
 
 if save:
 	f = open("kilnbackup.cfg", "w")
