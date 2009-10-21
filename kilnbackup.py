@@ -24,6 +24,7 @@
 import ConfigParser
 import cookielib
 import getpass
+import json
 import os
 import shutil
 import subprocess
@@ -87,9 +88,6 @@ def get_repos():
 
 	return js
 
-def jseval(js):
-	return eval(js, {"null":None, "true":True, "false":False})
-
 def build_url(path):
 	url = server + path
 	return url.replace("://", "://%s:%s@" % (
@@ -97,7 +95,7 @@ def build_url(path):
 			urllib.quote(settings["password"], '')
 		))
 
-for repo in jseval(get_repos()):
+for repo in json.loads(get_repos()):
 	url = build_url(repo["url"])
 	name = os.path.split(repo["url"])[-1]
 
