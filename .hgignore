@@ -1,0 +1,10 @@
+syntax: glob
+_ReSharper*
+*/bin/*
+*/obj/*
+*.suo
+*.user
+*.swp
+*~
+*.pyc
+*.cfg
