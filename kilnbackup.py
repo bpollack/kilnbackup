@@ -23,7 +23,7 @@
 
 import ConfigParser, sys, urllib, urllib2, cookielib, os, subprocess, shutil, time
 
-config = ConfigParser.ConfigParser()
+config = ConfigParser.RawConfigParser()
 config.read("kilnbackup.cfg")
 
 save = False
@@ -94,7 +94,7 @@ for repo in jseval(get_repos()):
 	name = os.path.split(repo["url"])[-1]
 
 	if (os.path.exists(name)):
-		hgrc = ConfigParser.ConfigParser()
+		hgrc = ConfigParser.SafeConfigParser()
 		hgrc.read("%s/.hg/hgrc" % name)
 
 		if not hgrc.has_section('paths') or hgrc.get('paths', 'default') != url:
