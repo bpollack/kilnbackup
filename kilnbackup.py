@@ -34,8 +34,7 @@ if not config.has_section('kiln'):
 settings = dict(config.items('kiln'))
 
 def prompt(msg):
-	print(msg)
-	value = sys.stdin.readline().strip()
+	value = raw_input(msg)
 	if not value:
 		sys.exit()
 	return value
@@ -49,9 +48,9 @@ def check(section, option, msg):
 	config.set(section, option, value)
 	settings[option] = value
 
-check("kiln", "server", "Enter the name of the fogbugz server (eg https://company.fogbugz.com)")
-check("kiln", "username", "Username:")
-check("kiln", "password", "Password:")
+check("kiln", "server", "FogBugz URL (e.g. https://company.fogbugz.com): ")
+check("kiln", "username", "Username: ")
+check("kiln", "password", "Password: ")
 
 if save:
 	f = open("kilnbackup.cfg", "w")
